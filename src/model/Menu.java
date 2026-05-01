@@ -34,4 +34,11 @@ public class Menu {
     public void setType(int type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "음식 이름: " + name +
+                ", 식당: " + type +
+                ", 가격: " + price + "원";
+    }
 }

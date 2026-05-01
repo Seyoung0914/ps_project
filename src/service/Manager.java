@@ -1,5 +1,6 @@
 package service;
 
+import model.Customer;
 import model.Menu;
 
 import java.util.ArrayList;
@@ -8,16 +9,22 @@ import java.util.Scanner;
 
 public class Manager {
     private Scanner sc;
-    private MenuServiceImpl menuService;
+    private MenuService menuService;
+    private CustomerService customerService;
     private List<Menu> menuList;
+    private List<Customer> customerList;
+    private Customer loginCustomer;
 
     public Manager() {
     }
 
-    public Manager(Scanner sc, MenuServiceImpl menuService) {
+    public Manager(Scanner sc, MenuService menuService, CustomerService customerService) {
         this.sc = sc;
         this.menuService = menuService;
+        this.customerService = customerService;
         this.menuList = new ArrayList<>();
+        this.customerList = new ArrayList<>();
+        this.loginCustomer = null;
     }
 
     public void run() {
@@ -39,7 +46,9 @@ public class Manager {
             }
 
             if (menu == 1) {
-                while (true) {
+                boolean isAdminMenu = true;
+
+                while (isAdminMenu) {
                     System.out.println("========== 관리자 메뉴 ==========");
                     System.out.println("1. 메뉴 추가");
                     System.out.println("2. 메뉴 리스트 출력");
@@ -47,6 +56,7 @@ public class Manager {
                     System.out.println("4. 메뉴 삭제");
                     System.out.println("5. 메뉴 검색");
                     System.out.println("6. 메뉴 분석");
+                    System.out.println("7. 회원 목록 출력");
                     System.out.println("0. 이전 메뉴");
                     System.out.println("================================");
                     System.out.print("선택 > ");
@@ -78,8 +88,13 @@ public class Manager {
                             menuService.analyzeSystem(menuList);
                             break;
 
+                        case 7:
+                            customerService.printCustomers(customerList);
+                            break;
+
                         case 0:
                             System.out.println("이전 메뉴로 돌아갑니다.");
+                            isAdminMenu = false;
                             break;
 
                         default:
@@ -87,11 +102,16 @@ public class Manager {
                             break;
                     }
                 }
+
             } else if (menu == 2) {
-                while (true) {
+                boolean isCustomerMenu = true;
+
+                while (isCustomerMenu) {
                     System.out.println("=========== 고객 메뉴 ===========");
-                    System.out.println("1. 음식 주문");
-                    System.out.println("2. 회원가입");
+                    System.out.println("1. 회원가입");
+                    System.out.println("2. 로그인");
+                    System.out.println("3. 음식 주문");
+                    System.out.println("4. 현재 로그인 사용자 확인");
                     System.out.println("0. 이전 메뉴");
                     System.out.println("================================");
                     System.out.print("선택 > ");
@@ -100,15 +120,36 @@ public class Manager {
 
                     switch (menu) {
                         case 1:
-                            menuService.orderMenu();
+                            customerService.registerCustomer(sc, customerList);
                             break;
 
                         case 2:
-                            menuService.registerSystem();
+                            loginCustomer = customerService.login(sc, customerList);
+
+                            if (loginCustomer != null) {
+                                System.out.println("현재 로그인 사용자: " + loginCustomer.getName());
+                            }
+                            break;
+
+                        case 3:
+                            if (loginCustomer == null) {
+                                System.out.println("로그인 후 주문할 수 있습니다.");
+                            } else {
+                                customerService.orderFood(sc, loginCustomer, menuList);
+                            }
+                            break;
+
+                        case 4:
+                            if (loginCustomer == null) {
+                                System.out.println("현재 로그인된 사용자가 없습니다.");
+                            } else {
+                                System.out.println("현재 로그인 사용자: " + loginCustomer.getName());
+                            }
                             break;
 
                         case 0:
                             System.out.println("이전 메뉴로 돌아갑니다.");
+                            isCustomerMenu = false;
                             break;
 
                         default:
@@ -116,8 +157,6 @@ public class Manager {
                             break;
                     }
                 }
-            } else {
-                System.out.println("잘못된 입력입니다.");
             }
         }
     }

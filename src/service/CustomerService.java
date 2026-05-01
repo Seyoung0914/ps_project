@@ -1,6 +1,7 @@
 package service;
 
 import model.Customer;
+import model.Menu;
 
 import java.util.List;
 import java.util.Scanner;
@@ -11,4 +12,6 @@ public interface CustomerService {
     Customer login(Scanner sc, List<Customer> customerList);
 
     void printCustomers(List<Customer> customerList);
+
+    void orderFood(Scanner sc, Customer loginCustomer, List<Menu> menuList);
 }
