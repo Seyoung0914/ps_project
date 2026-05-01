@@ -59,4 +59,12 @@ public class Customer {
         balance -= menu.getPrice();
         menuList.add(menu);
     }
+
+    @Override
+    public String toString() {
+        return "이름: " + name +
+                " | 아이디: " + userId +
+                " | 잔액: " + balance + "원" +
+                " | 주문 메뉴: " + menuList;
+    }
 }
