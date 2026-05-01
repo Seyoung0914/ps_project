@@ -32,9 +32,7 @@ public class Manager {
 
         while (true) {
             System.out.println("===== 학관 온라인 주문 프로그램 =====");
-            System.out.println("1. 관리자 메뉴");
-            System.out.println("2. 고객 메뉴");
-            System.out.println("0. 프로그램 종료");
+            System.out.println("1. 관리자 메뉴  2. 고객 메뉴  0. 프로그램 종료");
             System.out.println("================================");
             System.out.print("선택 > ");
 
@@ -50,14 +48,8 @@ public class Manager {
 
                 while (isAdminMenu) {
                     System.out.println("========== 관리자 메뉴 ==========");
-                    System.out.println("1. 메뉴 추가");
-                    System.out.println("2. 메뉴 리스트 출력");
-                    System.out.println("3. 메뉴 수정");
-                    System.out.println("4. 메뉴 삭제");
-                    System.out.println("5. 메뉴 검색");
-                    System.out.println("6. 메뉴 분석");
-                    System.out.println("7. 회원 목록 출력");
-                    System.out.println("0. 이전 메뉴");
+                    System.out.println("1. 메뉴 추가  2. 메뉴 리스트 출력  3. 메뉴 수정  4. 메뉴 삭제");
+                    System.out.println("5. 메뉴 검색  6. 메뉴 분석  7. 회원 목록 출력  0. 이전 메뉴");
                     System.out.println("================================");
                     System.out.print("선택 > ");
 
@@ -108,11 +100,7 @@ public class Manager {
 
                 while (isCustomerMenu) {
                     System.out.println("=========== 고객 메뉴 ===========");
-                    System.out.println("1. 회원가입");
-                    System.out.println("2. 로그인");
-                    System.out.println("3. 음식 주문");
-                    System.out.println("4. 현재 로그인 사용자 확인");
-                    System.out.println("0. 이전 메뉴");
+                    System.out.println("1. 회원가입  2. 로그인  3. 음식 주문  4. 현재 로그인 사용자 확인  0. 이전 메뉴");
                     System.out.println("================================");
                     System.out.print("선택 > ");
 
