@@ -1,19 +1,20 @@
 package service;
 
+import model.Menu;
+
+import java.util.List;
+import java.util.Scanner;
+
 public interface MenuService {
-    void addMenu();
+    void addMenu(Scanner sc, List<Menu> menuList);
 
-    void printMenu();
+    void printMenu(List<Menu> menuList);
 
-    void updateMenu();
+    void updateMenu(Scanner sc, List<Menu> menuList);
 
-    void deleteMenu();
+    void deleteMenu(Scanner sc, List<Menu> menuList);
 
-    void searchMenu();
+    void searchMenu(Scanner sc, List<Menu> menuList);
 
-    void analyzeSystem();
-
-    void orderMenu();
-
-    void registerSystem();
+    void analyzeSystem(List<Menu> menuList);
 }

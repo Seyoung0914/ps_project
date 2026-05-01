@@ -36,4 +36,24 @@ public class Order {
     public Menu getMenu() {
         return menu;
     }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
 }
