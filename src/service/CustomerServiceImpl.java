@@ -126,6 +126,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         loginCustomer.setBalance(loginCustomer.getBalance() - totalPrice);
         selectedMenu.setStock(selectedMenu.getStock() - count);
+        loginCustomer.setMenu(selectedMenu);
 
         System.out.println("주문이 완료되었습니다.");
         System.out.println("주문자: " + loginCustomer.getName());
