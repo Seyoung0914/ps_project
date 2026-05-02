@@ -13,4 +13,8 @@ public interface CustomerService {
     void printCustomers(List<Customer> customerList);
 
     void orderFood(Customer loginCustomer, List<Menu> menuList);
+
+    void saveCustomerList(List<Customer> customerList);
+
+    void loadCustomerList(List<Customer> customerList);
 }

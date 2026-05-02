@@ -16,4 +16,8 @@ public interface MenuService {
     void searchMenu(List<Menu> menuList);
 
     void analyzeSystem(List<Menu> menuList);
+
+    void saveMenuList(List<Menu> menuList);
+
+    void loadMenuList(List<Menu> menuList);
 }

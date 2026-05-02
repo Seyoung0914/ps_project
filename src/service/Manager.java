@@ -25,11 +25,13 @@ public class Manager {
         this.menuList = new ArrayList<>();
         this.customerList = new ArrayList<>();
         this.loginCustomer = null;
+
+        menuService.loadMenuList(menuList);
+        customerService.loadCustomerList(customerList);
     }
 
     public void run() {
         int menu;
-
         while (true) {
             System.out.println("===== 학관 온라인 주문 프로그램 =====");
             System.out.println("1. 관리자 메뉴  2. 고객 메뉴 3.파일 저장 0. 프로그램 종료");
@@ -57,7 +59,7 @@ public class Manager {
 
                     switch (menu) {
                         case 1:
-                            menuService.addMenu(sc, menuList);
+                            menuService.addMenu(menuList);
                             break;
 
                         case 2:
@@ -65,15 +67,15 @@ public class Manager {
                             break;
 
                         case 3:
-                            menuService.updateMenu(sc, menuList);
+                            menuService.updateMenu(menuList);
                             break;
 
                         case 4:
-                            menuService.deleteMenu(sc, menuList);
+                            menuService.deleteMenu(menuList);
                             break;
 
                         case 5:
-                            menuService.searchMenu(sc, menuList);
+                            menuService.searchMenu(menuList);
                             break;
 
                         case 6:
@@ -100,7 +102,7 @@ public class Manager {
 
                 while (isCustomerMenu) {
                     System.out.println("=========== 고객 메뉴 ===========");
-                    System.out.println("1. 회원가입  2. 로그인  3. 음식 주문  4. 현재 로그인 사용자 확인  0. 이전 메뉴");
+                    System.out.println("1. 회원가입  2. 로그인  3. 음식 주문  4. 현재 로그인 사용자 확인 5. 파일 저장  0. 이전 메뉴");
                     System.out.println("================================");
                     System.out.print("선택 > ");
 
@@ -108,11 +110,11 @@ public class Manager {
 
                     switch (menu) {
                         case 1:
-                            customerService.registerCustomer(sc, customerList);
+                            customerService.registerCustomer(customerList);
                             break;
 
                         case 2:
-                            loginCustomer = customerService.login(sc, customerList);
+                            loginCustomer = customerService.login(customerList);
 
                             if (loginCustomer != null) {
                                 System.out.println("현재 로그인 사용자: " + loginCustomer.getName());
@@ -123,7 +125,7 @@ public class Manager {
                             if (loginCustomer == null) {
                                 System.out.println("로그인 후 주문할 수 있습니다.");
                             } else {
-                                customerService.orderFood(sc, loginCustomer, menuList);
+                                customerService.orderFood(loginCustomer, menuList);
                             }
                             break;
 
@@ -145,11 +147,9 @@ public class Manager {
                             break;
                     }
                 }
-            }
-            else if(menu == 3) {
-                saveMenuList(menuList);
-                saveCustomerList(customerList);
-
+            } else if (menu == 3) {
+                customerService.saveCustomerList(customerList);
+                menuService.saveMenuList(menuList);
                 System.out.println("파일 저장 완료");
             }
         }

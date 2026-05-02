@@ -10,11 +10,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CustomerServiceImpl implements CustomerService {
-    Scanner sc;
     private static final String CUSTOMER_FILE_PATH = "customer.txt";
+    Scanner sc;
 
-    public CustomerServiceImpl(){}
-    public CustomerServiceImpl(Scanner sc){
+    public CustomerServiceImpl() {
+    }
+
+    public CustomerServiceImpl(Scanner sc) {
         this.sc = sc;
     }
 
@@ -142,6 +144,7 @@ public class CustomerServiceImpl implements CustomerService {
         return null;
     }
 
+    @Override
     public void saveCustomerList(List<Customer> customerList) {
         try {
             PrintWriter pw = new PrintWriter(CUSTOMER_FILE_PATH);
@@ -162,6 +165,7 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
+    @Override
     public void loadCustomerList(List<Customer> customerList) {
         File file = new File(CUSTOMER_FILE_PATH);
 

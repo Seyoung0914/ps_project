@@ -9,11 +9,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MenuServiceImpl implements MenuService {
-    Scanner sc;
     private static final String MENU_FILE_PATH = "menu.txt";
+    Scanner sc;
 
-    public MenuServiceImpl() {}
-    public MenuServiceImpl(Scanner sc){
+    public MenuServiceImpl() {
+    }
+
+    public MenuServiceImpl(Scanner sc) {
         this.sc = sc;
     }
 
@@ -241,6 +243,7 @@ public class MenuServiceImpl implements MenuService {
         System.out.println("Asian Market: " + type5Count + "개");
     }
 
+    @Override
     public void saveMenuList(List<Menu> menuList) {
         try {
             PrintWriter pw = new PrintWriter(MENU_FILE_PATH);
@@ -262,6 +265,7 @@ public class MenuServiceImpl implements MenuService {
         }
     }
 
+    @Override
     public void loadMenuList(List<Menu> menuList) {
         File file = new File(MENU_FILE_PATH);
 
