@@ -1,6 +1,5 @@
 package service;
 
-import model.Customer;
 import model.Menu;
 
 import java.io.File;
@@ -10,10 +9,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MenuServiceImpl implements MenuService {
+    Scanner sc;
     private static final String MENU_FILE_PATH = "menu.txt";
 
+    public MenuServiceImpl() {}
+    public MenuServiceImpl(Scanner sc){
+        this.sc = sc;
+    }
+
     @Override
-    public void addMenu(Scanner sc, List<Menu> menuList) {
+    public void addMenu(List<Menu> menuList) {
         sc.nextLine();
 
         System.out.print("메뉴의 이름 > ");
@@ -57,7 +62,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public void updateMenu(Scanner sc, List<Menu> menuList) {
+    public void updateMenu(List<Menu> menuList) {
         if (menuList.isEmpty()) {
             System.out.println("수정할 메뉴가 없습니다.");
             return;
@@ -113,7 +118,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public void deleteMenu(Scanner sc, List<Menu> menuList) {
+    public void deleteMenu(List<Menu> menuList) {
         if (menuList.isEmpty()) {
             System.out.println("삭제할 메뉴가 없습니다.");
             return;
@@ -143,7 +148,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public void searchMenu(Scanner sc, List<Menu> menuList) {
+    public void searchMenu(List<Menu> menuList) {
         if (menuList.isEmpty()) {
             System.out.println("검색할 메뉴가 없습니다.");
             return;

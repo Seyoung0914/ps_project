@@ -10,10 +10,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CustomerServiceImpl implements CustomerService {
+    Scanner sc;
     private static final String CUSTOMER_FILE_PATH = "customer.txt";
 
+    public CustomerServiceImpl(){}
+    public CustomerServiceImpl(Scanner sc){
+        this.sc = sc;
+    }
+
     @Override
-    public void registerCustomer(Scanner sc, List<Customer> customerList) {
+    public void registerCustomer(List<Customer> customerList) {
         sc.nextLine();
 
         System.out.print("이름 > ");
@@ -40,7 +46,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer login(Scanner sc, List<Customer> customerList) {
+    public Customer login(List<Customer> customerList) {
         sc.nextLine();
 
         System.out.print("아이디 > ");
@@ -75,7 +81,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void orderFood(Scanner sc, Customer loginCustomer, List<Menu> menuList) {
+    public void orderFood(Customer loginCustomer, List<Menu> menuList) {
         if (menuList.isEmpty()) {
             System.out.println("등록된 메뉴가 없습니다.");
             return;
