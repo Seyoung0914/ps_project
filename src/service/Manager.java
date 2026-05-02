@@ -26,8 +26,12 @@ public class Manager {
         this.customerList = new ArrayList<>();
         this.loginCustomer = null;
 
+        System.out.println("파일 로딩중..");
         menuService.loadMenuList(menuList);
         customerService.loadCustomerList(customerList);
+        if(menuList.isEmpty()){System.out.println("FileLoadingError!: 메뉴 파일이 없습니다.");}
+        if(customerList.isEmpty()){System.out.println("FileLoadingError!: 회원 파일이 없습니다.");}
+        System.out.println("파일 로딩 완료!");
     }
 
     public void run() {
@@ -102,7 +106,7 @@ public class Manager {
 
                 while (isCustomerMenu) {
                     System.out.println("=========== 고객 메뉴 ===========");
-                    System.out.println("1. 회원가입  2. 로그인  3. 음식 주문  4. 현재 로그인 사용자 확인 5. 파일 저장  0. 이전 메뉴");
+                    System.out.println("1. 회원가입  2. 로그인  3. 음식 주문  4. 현재 로그인 사용자 확인 0. 이전 메뉴");
                     System.out.println("================================");
                     System.out.print("선택 > ");
 
