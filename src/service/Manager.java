@@ -147,7 +147,10 @@ public class Manager {
                 }
             }
             else if(menu == 3) {
+                saveMenuList(menuList);
+                saveCustomerList(customerList);
 
+                System.out.println("파일 저장 완료");
             }
         }
     }

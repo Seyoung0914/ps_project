@@ -1,11 +1,16 @@
 package service;
 
+import model.Customer;
 import model.Menu;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Scanner;
 
 public class MenuServiceImpl implements MenuService {
+    private static final String MENU_FILE_PATH = "menu.txt";
 
     @Override
     public void addMenu(Scanner sc, List<Menu> menuList) {
@@ -229,5 +234,58 @@ public class MenuServiceImpl implements MenuService {
         System.out.println("Fry Fry: " + type3Count + "개");
         System.out.println("H:Plate: " + type4Count + "개");
         System.out.println("Asian Market: " + type5Count + "개");
+    }
+
+    public void saveMenuList(List<Menu> menuList) {
+        try {
+            PrintWriter pw = new PrintWriter(MENU_FILE_PATH);
+
+            for (Menu menu : menuList) {
+                pw.println(
+                        menu.getName() + "|" +
+                                menu.getPrice() + "|" +
+                                menu.getType() + "|" +
+                                menu.getDescription() + "|" +
+                                menu.getStock()
+                );
+            }
+
+            pw.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("메뉴 파일 저장 중 오류가 발생했습니다.");
+        }
+    }
+
+    public void loadMenuList(List<Menu> menuList) {
+        File file = new File(MENU_FILE_PATH);
+
+        if (!file.exists()) {
+            return;
+        }
+
+        try {
+            Scanner fileScanner = new Scanner(file);
+
+            while (fileScanner.hasNextLine()) {
+                String line = fileScanner.nextLine();
+
+                String[] data = line.split("\\|");
+
+                String name = data[0];
+                int price = Integer.parseInt(data[1]);
+                int type = Integer.parseInt(data[2]);
+                String description = data[3];
+                int stock = Integer.parseInt(data[4]);
+
+                Menu menu = new Menu(name, price, type, description, stock);
+                menuList.add(menu);
+            }
+
+            fileScanner.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("메뉴 파일을 불러오는 중 오류가 발생했습니다.");
+        }
     }
 }

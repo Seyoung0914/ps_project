@@ -3,10 +3,14 @@ package service;
 import model.Customer;
 import model.Menu;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Scanner;
 
 public class CustomerServiceImpl implements CustomerService {
+    private static final String CUSTOMER_FILE_PATH = "customer.txt";
 
     @Override
     public void registerCustomer(Scanner sc, List<Customer> customerList) {
@@ -129,7 +133,57 @@ public class CustomerServiceImpl implements CustomerService {
                 return customer;
             }
         }
-
         return null;
+    }
+
+    public void saveCustomerList(List<Customer> customerList) {
+        try {
+            PrintWriter pw = new PrintWriter(CUSTOMER_FILE_PATH);
+
+            for (Customer customer : customerList) {
+                pw.println(
+                        customer.getName() + "|" +
+                                customer.getUserId() + "|" +
+                                customer.getPassword() + "|" +
+                                customer.getBalance()
+                );
+            }
+
+            pw.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("회원 파일 저장 중 오류가 발생했습니다.");
+        }
+    }
+
+    public void loadCustomerList(List<Customer> customerList) {
+        File file = new File(CUSTOMER_FILE_PATH);
+
+        if (!file.exists()) {
+            return;
+        }
+
+        try {
+            Scanner fileScanner = new Scanner(file);
+
+            while (fileScanner.hasNextLine()) {
+                String line = fileScanner.nextLine();
+
+                String[] data = line.split("\\|");
+
+                String name = data[0];
+                String userId = data[1];
+                String password = data[2];
+                int balance = Integer.parseInt(data[3]);
+
+                Customer customer = new Customer(name, userId, password, balance);
+                customerList.add(customer);
+            }
+
+            fileScanner.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("회원 파일을 불러오는 중 오류가 발생했습니다.");
+        }
     }
 }
