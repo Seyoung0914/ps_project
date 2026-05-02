@@ -14,7 +14,7 @@ public class Customer {
     private int balance;
 
     // 고객이 주문한 메뉴들을 저장하는 리스트
-    private ArrayList<Menu> menuList;
+    private ArrayList<String> menuList;
 
     // 기본 생성자
     // 객체를 만들 때 값을 바로 넣지 않고 나중에 setter로 넣고 싶을 때 사용 가능
@@ -65,16 +65,16 @@ public class Customer {
         this.balance = balance;
     }
 
-    public ArrayList<Menu> getMenuList() {
+    public ArrayList<String> getMenuList() {
         return menuList;
     }
 
-    public void setMenuList(ArrayList<Menu> menuList) {
+    public void setMenuList(ArrayList<String> menuList) {
         this.menuList = menuList;
     }
 
     public void setMenu(Menu menu) {
-        menuList.add(menu);
+        menuList.add(menu.getName());
     }
 
     @Override
