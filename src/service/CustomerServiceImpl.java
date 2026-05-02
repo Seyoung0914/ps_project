@@ -96,6 +96,13 @@ public class CustomerServiceImpl implements CustomerService {
         System.out.print("주문 개수 > ");
         int count = sc.nextInt();
 
+        if (selectedMenu.getStock() < count) {
+            System.out.println("재고가 부족합니다.");
+            System.out.println("현재 재고: " + selectedMenu.getStock() + "개");
+            System.out.println("주문 요청 개수: " + count + "개");
+            return;
+        }
+
         int totalPrice = selectedMenu.getPrice() * count;
 
         if (loginCustomer.getBalance() < totalPrice) {
@@ -106,6 +113,7 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         loginCustomer.setBalance(loginCustomer.getBalance() - totalPrice);
+        selectedMenu.setStock(selectedMenu.getStock() - count);
 
         System.out.println("주문이 완료되었습니다.");
         System.out.println("주문자: " + loginCustomer.getName());

@@ -32,7 +32,7 @@ public class Manager {
 
         while (true) {
             System.out.println("===== 학관 온라인 주문 프로그램 =====");
-            System.out.println("1. 관리자 메뉴  2. 고객 메뉴  0. 프로그램 종료");
+            System.out.println("1. 관리자 메뉴  2. 고객 메뉴 3.파일 저장 0. 프로그램 종료");
             System.out.println("================================");
             System.out.print("선택 > ");
 
@@ -145,6 +145,9 @@ public class Manager {
                             break;
                     }
                 }
+            }
+            else if(menu == 3) {
+
             }
         }
     }
