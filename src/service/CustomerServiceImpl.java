@@ -3,13 +3,25 @@ package service;
 import model.Customer;
 import model.Menu;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Scanner;
 
 public class CustomerServiceImpl implements CustomerService {
+    private static final String CUSTOMER_FILE_PATH = "customer.txt";
+    Scanner sc;
+
+    public CustomerServiceImpl() {
+    }
+
+    public CustomerServiceImpl(Scanner sc) {
+        this.sc = sc;
+    }
 
     @Override
-    public void registerCustomer(Scanner sc, List<Customer> customerList) {
+    public void registerCustomer(List<Customer> customerList) {
         sc.nextLine();
 
         System.out.print("이름 > ");
@@ -36,7 +48,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer login(Scanner sc, List<Customer> customerList) {
+    public Customer login(List<Customer> customerList) {
         sc.nextLine();
 
         System.out.print("아이디 > ");
@@ -71,7 +83,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void orderFood(Scanner sc, Customer loginCustomer, List<Menu> menuList) {
+    public void orderFood(Customer loginCustomer, List<Menu> menuList) {
         if (menuList.isEmpty()) {
             System.out.println("등록된 메뉴가 없습니다.");
             return;
@@ -96,6 +108,13 @@ public class CustomerServiceImpl implements CustomerService {
         System.out.print("주문 개수 > ");
         int count = sc.nextInt();
 
+        if (selectedMenu.getStock() < count) {
+            System.out.println("재고가 부족합니다.");
+            System.out.println("현재 재고: " + selectedMenu.getStock() + "개");
+            System.out.println("주문 요청 개수: " + count + "개");
+            return;
+        }
+
         int totalPrice = selectedMenu.getPrice() * count;
 
         if (loginCustomer.getBalance() < totalPrice) {
@@ -106,6 +125,7 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         loginCustomer.setBalance(loginCustomer.getBalance() - totalPrice);
+        selectedMenu.setStock(selectedMenu.getStock() - count);
 
         System.out.println("주문이 완료되었습니다.");
         System.out.println("주문자: " + loginCustomer.getName());
@@ -121,7 +141,59 @@ public class CustomerServiceImpl implements CustomerService {
                 return customer;
             }
         }
-
         return null;
+    }
+
+    @Override
+    public void saveCustomerList(List<Customer> customerList) {
+        try {
+            PrintWriter pw = new PrintWriter(CUSTOMER_FILE_PATH);
+
+            for (Customer customer : customerList) {
+                pw.println(
+                        customer.getName() + "|" +
+                                customer.getUserId() + "|" +
+                                customer.getPassword() + "|" +
+                                customer.getBalance()
+                );
+            }
+
+            pw.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("회원 파일 저장 중 오류가 발생했습니다.");
+        }
+    }
+
+    @Override
+    public void loadCustomerList(List<Customer> customerList) {
+        File file = new File(CUSTOMER_FILE_PATH);
+
+        if (!file.exists()) {
+            return;
+        }
+
+        try {
+            Scanner fileScanner = new Scanner(file);
+
+            while (fileScanner.hasNextLine()) {
+                String line = fileScanner.nextLine();
+
+                String[] data = line.split("\\|");
+
+                String name = data[0];
+                String userId = data[1];
+                String password = data[2];
+                int balance = Integer.parseInt(data[3]);
+
+                Customer customer = new Customer(name, userId, password, balance);
+                customerList.add(customer);
+            }
+
+            fileScanner.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("회원 파일을 불러오는 중 오류가 발생했습니다.");
+        }
     }
 }
